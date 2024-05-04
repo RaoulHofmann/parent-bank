@@ -21,7 +21,7 @@ class ManageAccount extends Component
     public function types(): Collection
     {
         return AccountType::all()->map(function (AccountType $accountType) {
-            return ['name' => ucfirst($accountType->name), 'id' => $accountType->id];
+            return ['name' => ucfirst($accountType->type), 'id' => $accountType->id];
         });
     }
 
@@ -34,14 +34,14 @@ class ManageAccount extends Component
     public function update(): void
     {
         $this->validate();
-        $this->form->addAccount();
+        $this->form->updateAccount($this->dialogData);
         $this->closeDialog(Dashboard::class);
     }
 
     public function submit(): void
     {
         $this->validate();
-        $this->form->updateAccount($this->data);
+        $this->form->addAccount();
         $this->closeDialog(Dashboard::class);
     }
 }

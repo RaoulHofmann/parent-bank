@@ -17,7 +17,7 @@ class AccountTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'savings',
+            'type' => 'savings',
             'default_interest' => rand(0, 5) / 10,
         ];
     }

@@ -33,7 +33,7 @@ class Account extends Model
 
     public function getAmountAttribute($value)
     {
-        return number_format($value / 100, 2); // Assuming the integer value represents cents
+        return number_format($value / 100, 2);
     }
 
     public function users(): BelongsToMany

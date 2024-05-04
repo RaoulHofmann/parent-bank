@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Account::class);
     }
+
+    public function families(): BelongsToMany
+    {
+        return $this->belongsToMany(Family::class);
+    }
 }

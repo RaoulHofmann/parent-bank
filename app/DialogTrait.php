@@ -7,13 +7,11 @@ use Livewire\Attributes\On;
 trait DialogTrait
 {
     public bool $dialogState = false;
-
     public string $confirmButtonText = 'Add';
-
-    public ?array $data = null;
+    public ?array $dialogData = null;
 
     #[On('open-dialog')]
-    public function openDialog($data, $confirmButtonText): void
+    public function openDialog($data = null, $confirmButtonText = null): void
     {
         $this->dialogState = true;
 
@@ -21,19 +19,24 @@ trait DialogTrait
             $this->confirmButtonText = $confirmButtonText;
         }
 
-        // Set form data if form property exists and data is not null
-        if (property_exists($this, 'form') && ! is_null($data)) {
-            $this->data = $data;
-            $this->form->setData($this->data); // Assuming you have a method like setData in your form class
+        if ($data !== null) {
+            $this->dialogData = $data;
+        }
+
+        if (property_exists($this, 'form')) {
+            $this->form->setData($this->dialogData);
         }
     }
 
-    public function closeDialog($targetClass): void
+    public function closeDialog($targetClass = null): void
     {
         $this->dialogState = false;
-        $this->dispatch('refresh', $targetClass);
+        error_log("TEST");
+        error_log($targetClass);
+        $targetClass !== null ? $this->dispatch('refresh', $targetClass) : $this->dispatch('refresh');
         if (property_exists($this, 'form')) {
             $this->form->reset();
+            $this->dialogData = null;
         }
     }
 }

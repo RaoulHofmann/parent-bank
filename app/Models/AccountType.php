@@ -17,7 +17,7 @@ class AccountType extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'type',
         'default_interest',
     ];
 

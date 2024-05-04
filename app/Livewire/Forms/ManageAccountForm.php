@@ -3,6 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Account;
+use App\Models\Transaction;
+use App\Models\TransactionType;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -16,7 +18,10 @@ class ManageAccountForm extends Form
     #[Validate('required')]
     public string $type = '';
 
-    public function setData(array $data): void
+    #[Validate('numeric')]
+    public ?int $amount;
+
+    public function setData(array $data = null): void
     {
         $this->name = $data['name'] ?? '';
         $this->type = $data['account_type_id'] ?? '';
@@ -29,11 +34,20 @@ class ManageAccountForm extends Form
             DB::beginTransaction();
             $account = Account::create([
                 'name' => $this->name,
+                'amount' => $this->amount,
                 'account_type_id' => $this->type,
             ]);
             $account->users()->sync([auth()->id()]);
+
+            Transaction::create([
+                'source_account_id' => $account->id,
+                'description' => 'New Account',
+                'transaction_type_id' => TransactionType::where('type', 'deposit')->first()->id,
+                'amount' => $this->amount,
+            ]);
             DB::commit();
         } catch (\Exception $ex) {
+            error_log($ex->getMessage());
             DB::rollBack();
         }
     }

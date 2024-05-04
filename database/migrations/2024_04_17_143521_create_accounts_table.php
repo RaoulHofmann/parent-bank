@@ -11,6 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('account_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->decimal('default_interest');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('accounts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
@@ -31,5 +39,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('accounts');
+        Schema::dropIfExists('account_types');
     }
 };
