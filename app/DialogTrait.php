@@ -31,8 +31,6 @@ trait DialogTrait
     public function closeDialog($targetClass = null): void
     {
         $this->dialogState = false;
-        error_log("TEST");
-        error_log($targetClass);
         $targetClass !== null ? $this->dispatch('refresh', $targetClass) : $this->dispatch('refresh');
         if (property_exists($this, 'form')) {
             $this->form->reset();

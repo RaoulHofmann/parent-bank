@@ -17,9 +17,9 @@
                 </div>
 
                 <div class="grid grid-rows-3 justify-center items-center content-center">
-                    <h5 class="capitalize underline decoration-sky-500/30">{{ $account->name }}</h5>
-                    <h6 class="text-center uppercase text-xs text-gray-500">{{ $account->accountType->type }}</h6>
-                    <span class="text-center ">$ {{ $account->amount }}</span>
+                    <h5 class="capitalize underline decoration-sky-500/30 text-center">{{ $account->name }}</h5>
+                    <h6 class="text-center uppercase text-xs text-gray-500 text-center">{{ $account->accountType->type }}</h6>
+                    <span class="text-center">${{ $account->amount }}</span>
                 </div>
             </div>
         @endforeach

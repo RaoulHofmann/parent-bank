@@ -28,7 +28,6 @@ class Dashboard extends Component
     // TODO Deal with multiple account attaches
     public function deleteAccount($id): void
     {
-        error_log('ADSASDASD'.$id);
         try {
             DB::beginTransaction();
             $account = Account::find($id);
