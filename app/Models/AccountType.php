@@ -21,6 +21,8 @@ class AccountType extends Model
         'default_interest',
     ];
 
+    protected $guarded = ['account_type_id', 'user_id'];
+
     public function accounts(): HasMany
     {
         return $this->hasMany(Account::class);

@@ -5,7 +5,6 @@ namespace App\Livewire\Dialog;
 use App\DialogTrait;
 use App\Livewire\Dashboard;
 use App\Livewire\Forms\ManageAccountForm;
-use App\Models\Account;
 use App\Models\AccountType;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
@@ -25,16 +24,10 @@ class ManageAccount extends Component
         });
     }
 
-    public function deleteAccount($id): void
-    {
-        Account::softDeleted($id);
-        $this->dispatch('refresh', Dashboard::class);
-    }
-
     public function update(): void
     {
         $this->validate();
-        $this->form->updateAccount($this->dialogData);
+        $this->form->updateAccount($this->form->all());
         $this->closeDialog(Dashboard::class);
     }
 

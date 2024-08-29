@@ -12,6 +12,8 @@ use Livewire\Form;
 // TODO create toast for feedback from form
 class ManageAccountForm extends Form
 {
+    public ?string $id = null;
+
     #[Validate('required')]
     public string $name = '';
 
@@ -23,8 +25,10 @@ class ManageAccountForm extends Form
 
     public function setData(array $data = null): void
     {
+        $this->id = $data['id'] ?? null;
         $this->name = $data['name'] ?? '';
         $this->type = $data['account_type_id'] ?? '';
+        $this->amount = $data['amount'] ?? 0;
     }
 
     // TODO Deal with multiple account attaches
@@ -34,7 +38,7 @@ class ManageAccountForm extends Form
             DB::beginTransaction();
             $account = Account::create([
                 'name' => $this->name,
-                'amount' => $this->amount,
+                'amount' => ($this->amount * 100),
                 'account_type_id' => $this->type,
             ]);
             $account->users()->sync([auth()->id()]);
@@ -64,6 +68,7 @@ class ManageAccountForm extends Form
             ]);
             DB::commit();
         } catch (\Exception $ex) {
+            error_log($ex->getMessage());
             DB::rollBack();
         }
     }

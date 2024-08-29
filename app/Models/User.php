@@ -52,6 +52,8 @@ class User extends Authenticatable
         ];
     }
 
+    protected $guarded = ['id'];
+
     public function accounts(): BelongsToMany
     {
         return $this->belongsToMany(Account::class);

@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Account;
 use App\Models\AccountType;
+use App\Models\DestinationType;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use App\Models\User;
+use Database\Factories\DestinationTypeFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,11 +36,18 @@ class DatabaseSeeder extends Seeder
                 'password' => 'demo1234',
             ]);
 
+        DestinationType::factory()->create([
+            'type' => 'external'
+        ]);
+        DestinationType::factory()->create([
+            'type' => 'internal'
+        ]);
+
         Transaction::factory()->create([
             'description' => 'Demo Transaction',
             'amount' => 100,
             'transaction_type_id' => TransactionType::factory()->state(['type' => 'withdraw'])->create()->id,
-            'source_account_id' => $user->accounts()->first()->id,
+            'account_id' => $user->accounts()->first()->id,
         ]);
 
         TransactionType::factory()->create([

@@ -19,9 +19,12 @@ class Transaction extends Model
         'description',
         'amount',
         'transaction_type_id',
-        'source_account_id',
-        'dest_account_id'
+        'account_id',
+        'dest_type_id',
+        'destination'
     ];
+
+    protected $guarded = ['id'];
 
     public function getAmountAttribute($value)
     {

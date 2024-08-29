@@ -1,5 +1,5 @@
 <x-dialog :dialogState="$dialogState">
-    <form wire:submit.prevent="submit">
+    <form wire:submit.prevent="{{ $edit === false ? 'submit' : 'update' }}">
         <h4>{{ $dialogData !== null ? __('Edit') : __('New') }} {{ __('Account') }}</h4>
         <hr>
         <div class="grid grid-rows-auto mt-2">
@@ -13,7 +13,7 @@
                 <x-input.select wire:model="form.type" id="type" class="block mt-1 w-full" name="type" required :items="$this->types" id="id" text="name"/>
                 <x-input.error :messages="$errors->get('form.type')" class="mt-2" />
             </div>
-            @if($dialogData === null)
+            @if($edit === false)
                 <div class="mt-3">
                     <x-input.label for="amount" :value="__('Initial Amount')" />
                     <x-input.text wire:model="form.amount" id="amount" class="block mt-1 w-full" placeholder="Enter Amount" />

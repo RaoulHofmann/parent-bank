@@ -31,6 +31,8 @@ class Account extends Model
         'custom_interest',
     ];
 
+    protected $guarded = ['id'];
+
     public function getAmountAttribute($value)
     {
         return number_format($value / 100, 2);
