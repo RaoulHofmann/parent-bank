@@ -44,7 +44,7 @@ class ManageAccountForm extends Form
             $account->users()->sync([auth()->id()]);
 
             Transaction::create([
-                'source_account_id' => $account->id,
+                'account_id' => $account->id,
                 'description' => 'New Account',
                 'transaction_type_id' => TransactionType::where('type', 'deposit')->first()->id,
                 'amount' => $this->amount,
